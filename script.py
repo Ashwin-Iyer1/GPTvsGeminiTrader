@@ -7,6 +7,7 @@ import chatGPT
 import Gemini
 import smtplib
 import os
+from datetime import datetime
 
 phonenumber = os.getenv("phonenumber")
 Alpaca_API_KEY = os.getenv("Alpaca_API_KEY")
@@ -29,6 +30,7 @@ trading_client = TradingClient(Alpaca_API_KEY, Alpaca_SECRET_KEY, paper=True)
 def initAcc():
     global account
     account = trading_client.get_account()
+    server.sendmail(auth[0], f"{phonenumber}@vtext.com", f'Current portfolio balance: ${account.equity}')
 
 def get_liquid():
     return account.buying_power
@@ -36,6 +38,7 @@ def get_liquid():
 
 def margin():
     balance_change = float(account.equity) - float(account.last_equity)
+    server.sendmail(auth[0], f"{phonenumber}@vtext.com", f'Today\'s portfolio balance change: ${balance_change}')
     print(f'Today\'s portfolio balance change: ${balance_change}')
 
 
@@ -119,6 +122,11 @@ def main():
             print(f"OpenAI Error occurred: {e}")
         i += 1
 
-
-main()
+dt = datetime.now()
+if dt.isoweekday() > 5:
+    print("It's the weekend, no trading today")
+else:
+    initAcc()
+    margin()
+    main()
 
