@@ -1,5 +1,6 @@
 from openai import OpenAI
 import News
+import os
 
 GPTApikey = os.getenv("GPTAPIKEY")
 

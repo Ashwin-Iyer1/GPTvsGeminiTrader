@@ -1,5 +1,5 @@
 import requests
-
+import os
 
 apikey = os.getenv("NEWSAPIKEY")
 articles = []
