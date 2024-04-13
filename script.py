@@ -79,7 +79,7 @@ def buy_multiple_eql_amts(stocks, amt, Platform):
     for stock in stocks:
         stockprice = getStockPrice(stock)
         stockPrices.append(stockprice)
-        listofPrices.append(stockprice)
+        listofPrices.append(amt / stockprice)
     print(listofPrices)
     for stock in stocks:
         # buyAsset(stock, round(amt / listofPrices[counter], 1))
