@@ -76,17 +76,17 @@ def buy_multiple_eql_amts(stocks, amt, Platform):
     listofPrices = []
     counter = 0
     stockPrices = []
+    allstocks = []
     for stock in stocks:
         stockprice = getStockPrice(stock)
         stockPrices.append(stockprice)
         listofPrices.append(amt / stockprice)
-    server.sendmail(auth[0], f"{phonenumber}@vtext.com", 'Using ' + Platform)
     for stock in stocks:
         # buyAsset(stock, round(amt / listofPrices[counter], 1))
         #print only up to 1 decimal place for amt / stockprice
         listofbuys.append(f'{listofPrices[counter]:.1f} shares of {stock} at {stockPrices[counter]}')
-        server.sendmail(auth[0], f"{phonenumber}@vtext.com", "bought " + f'{listofPrices[counter]:.1f} shares of {stock}')
         counter += 1
+    server.sendmail(auth[0], f"{phonenumber}@vtext.com", Platform + " bought " + str(stocks))
     print('Using ' + Platform + " bought " + str(listofbuys))
 
     return listofbuys
