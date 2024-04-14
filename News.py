@@ -1,10 +1,11 @@
 import requests
 import os
-
+from datetime import date
 apikey = os.getenv("NEWSAPIKEY")
 articles = []
 def getTechNews():
-    url = 'https://newsapi.org/v2/top-headlines?country=us&category=business&from=2024-03-13&sortBy=popularity&apiKey=' + apikey
+    Todaydate = str(date.today())
+    url = f"https://newsapi.org/v2/top-headlines?country=us&category=business&from={Todaydate}&sortBy=popularity&apiKey=" + apikey
     response = requests.get(url)
     data = response.json()
     i=0
@@ -18,3 +19,4 @@ def getTechNews():
 getTechNews()
 def getArticles():
     return articles
+
