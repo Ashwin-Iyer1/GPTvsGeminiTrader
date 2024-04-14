@@ -21,6 +21,7 @@ def parse_text(text):
     text = text.replace(",", '')
     text = text.replace('\n', ' ')
     text = text.replace('-', '')
+    text = text.upper()
     stocks = text.split(' ')
     return(stocks)
 
