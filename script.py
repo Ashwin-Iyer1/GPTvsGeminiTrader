@@ -91,11 +91,18 @@ def buy_multiple_eql_amts(stocks, amt, Platform):
         listofPrices.append(float(amt) / stockprice)
     print(listofPrices)
     for stock in stocks:
-        buyAsset(stock, round(listofPrices[counter], 1))
-        QueryStock(stock, round(listofPrices[counter], 1), Platform)
-        #print only up to 1 decimal place for amt / stockprice
-        listofbuys.append(f'{listofPrices[counter]:.2f} shares of {stock} at {stockPrices[counter]}')
-        counter += 1
+        try:
+            buyAsset(stock, round(listofPrices[counter], 1))
+            QueryStock(stock, round(listofPrices[counter], 1), Platform)
+            #print only up to 1 decimal place for amt / stockprice
+            listofbuys.append(f'{listofPrices[counter]:.2f} shares of {stock} at {stockPrices[counter]}')
+            counter += 1
+        except Exception as e:
+            if "asset not found" in str(e) or "is not active" in str(e):
+                print(f"Skipping {stock} due to error: {e}")
+                continue
+            else:
+                raise e
     server.sendmail(auth[0], f"{phonenumber}@vtext.com", Platform + " bought " + str(stocks))
     print('Using ' + Platform + " bought " + str(listofbuys))
 
