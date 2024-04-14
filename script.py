@@ -58,7 +58,7 @@ def buyAsset(symbol, qty):
                         side=OrderSide.BUY,
                         time_in_force=TimeInForce.DAY
                         )
-    print("buying " + symbol + " at " + str(getStockPrice(symbol) + " " + str(qty)))
+    print("buying " + str(symbol) + " at " + str(getStockPrice(symbol) + " " + str(qty)))
     submit(market_order_data)
 
 def getStockPrice(symbol):
