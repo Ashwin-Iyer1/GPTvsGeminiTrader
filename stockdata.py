@@ -130,7 +130,7 @@ def insert_total_values_into_value_table():
         """, (openai_value, gemini_value))
         conn.commit()
         print("Total values inserted into value table successfully.")
-        return ("OpenAI Value: " + openai_value + " Gemini Value: " + gemini_value)
+        return ("OpenAI Value: " + str(openai_value) + " Gemini Value: " + str(gemini_value))
     except (Exception, psycopg2.Error) as error:
         print("Error inserting total values into value table:", error)
     finally:

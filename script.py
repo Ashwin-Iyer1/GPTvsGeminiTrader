@@ -77,7 +77,7 @@ def getallassets():
 def TableValue():
     val = insert_total_values_into_value_table()
     print(val)
-    server.sendmail(auth[0], f"{phonenumber}@vtext.com", val)
+    server.sendmail(auth[0], f"{phonenumber}@vtext.com", str(val))
     
 
 def buy_multiple_eql_amts(stocks, amt, Platform):
@@ -130,19 +130,15 @@ def main():
         i += 1
 
 
-initAcc()
-margin()
-main()
-TableValue()
-server.quit()
 
-# dt = datetime.now()
-# if dt.isoweekday() > 5:
-#     print("It's the weekend, no trading today")
-# else:
-#     initAcc()
-#     margin()
-#     main()
-#     TableValue()
+dt = datetime.now()
+if dt.isoweekday() > 5:
+    print("It's the weekend, no trading today")
+else:
+    initAcc()
+    margin()
+    main()
+    TableValue()
+    server.quit()
 
 
