@@ -8,7 +8,7 @@ import Gemini
 import smtplib
 import os
 from datetime import datetime
-
+from stockdata import insert_total_values_into_value_table, QueryStock
 phonenumber = os.getenv("phonenumber")
 Alpaca_API_KEY = os.getenv("Alpaca_API_KEY")
 Alpaca_SECRET_KEY = os.getenv("Alpaca_SECRET_KEY")
@@ -73,6 +73,11 @@ def getallassets():
     assets = trading_client.get_all_assets()
     return assets
 
+def TableValue():
+    val = insert_total_values_into_value_table()
+    print(val)
+    server.sendmail(auth[0], f"{phonenumber}@vtext.com", val)
+    
 
 def buy_multiple_eql_amts(stocks, amt, Platform):
     listofbuys = []
@@ -85,7 +90,7 @@ def buy_multiple_eql_amts(stocks, amt, Platform):
         listofPrices.append((amt / stockprice))
     for stock in stocks:
         buyAsset(stock, round(amt / listofPrices[counter], 1))
-        
+        QueryStock(stock, round(amt / listofPrices[counter], 1), Platform)
         #print only up to 1 decimal place for amt / stockprice
         listofbuys.append(f'{listofPrices[counter]:.2f} shares of {stock} at {stockPrices[counter]}')
         counter += 1
@@ -101,7 +106,7 @@ def main():
             Gemini_content = Gemini.main()
             print(Gemini_content)
             numstocks = len(Gemini_content)
-            buys = buy_multiple_eql_amts(Gemini_content, 3000/numstocks, 'Gemini')
+            buys = buy_multiple_eql_amts(Gemini_content, 3000/numstocks, 'gemini')
             if buys:
                 break
         except Exception as e:
@@ -115,18 +120,27 @@ def main():
             OpenAI_content = chatGPT.main()
             print(OpenAI_content)
             numstocks = len(OpenAI_content)
-            buys = buy_multiple_eql_amts(OpenAI_content, 3000/numstocks, 'OpenAI')
+            buys = buy_multiple_eql_amts(OpenAI_content, 3000/numstocks, 'openai')
             if buys:
                 break
         except Exception as e:
             print(f"OpenAI Error occurred: {e}")
         i += 1
 
-dt = datetime.now()
-if dt.isoweekday() > 5:
-    print("It's the weekend, no trading today")
-else:
-    initAcc()
-    margin()
-    main()
+
+initAcc()
+margin()
+main()
+TableValue()
+server.quit()
+
+# dt = datetime.now()
+# if dt.isoweekday() > 5:
+#     print("It's the weekend, no trading today")
+# else:
+#     initAcc()
+#     margin()
+#     main()
+#     TableValue()
+
 
