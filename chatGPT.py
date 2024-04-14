@@ -43,8 +43,8 @@ def strip_text(text):
   text = text.replace(",", '')
   text = text.replace('\n', ' ')
   text = text.replace('-', '')
-  stocks = text.split(' ')
   text = text.upper()
+  stocks = text.split(' ')
   return stocks
 
 
