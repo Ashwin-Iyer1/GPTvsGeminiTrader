@@ -20,10 +20,11 @@ def initialize_data_in_database():
         cursor = conn.cursor()
         # Create a new table if it doesn't exist
         cursor.execute("""
-            CREATE TABLE IF NOT EXISTS openai (
+            CREATE TABLE IF NOT EXISTS gemini (
                 id SERIAL PRIMARY KEY,
                 Stock VARCHAR UNIQUE,
-                Amt NUMERIC(10, 2)
+                Amt NUMERIC(10, 2),
+                TotalSpent NUMERIC(10, 2)
             );
         """)
         # Insert initial data into the table
@@ -38,24 +39,34 @@ def initialize_data_in_database():
 
 
 
-def QueryStock(symbol, amt, platform):
-    try:
-        cursor = conn.cursor()
-        query = """
-            INSERT INTO "{}" (Stock, Amt)
-            VALUES (%s, %s)
-            ON CONFLICT (Stock) DO UPDATE
-            SET Amt = "{}".Amt + EXCLUDED.Amt
-            WHERE "{}".Stock = EXCLUDED.Stock;
-        """.format(platform, platform, platform)
-        cursor.execute(query, (symbol, amt))
-        conn.commit()
-        print("Stock query executed successfully.")
-    except (Exception, psycopg2.Error) as error:
-        print("Error querying stock:", error)
-    finally:
-        if cursor:
-            cursor.close()
+def QueryStock(symbol, amt, total_spent, platform):
+  """
+  Inserts or updates stock data in the specified platform table.
+
+  Args:
+      symbol: The stock symbol (e.g., "AAPL").
+      amt: The quantity of shares owned.
+      total_spent: The total amount spent on the stock.
+      platform: The table name (e.g., "gemini").
+  """
+  try:
+      cursor = conn.cursor()
+      query = f"""
+          INSERT INTO "{platform}" (Stock, Amt, TotalSpent)
+          VALUES (%s, %s, %s)
+          ON CONFLICT (Stock) DO UPDATE SET
+              Amt = EXCLUDED.Amt + "{platform}".Amt,
+              TotalSpent = EXCLUDED.TotalSpent
+          WHERE "{platform}".Stock = EXCLUDED.Stock;
+      """
+      cursor.execute(query, (symbol, amt, total_spent))
+      conn.commit()
+      print("Stock query executed successfully.")
+  except (Exception, psycopg2.Error) as error:
+      print("Error querying stock:", error)
+  finally:
+      if cursor:
+          cursor.close()
 
 
 def getStockPrice(symbol):

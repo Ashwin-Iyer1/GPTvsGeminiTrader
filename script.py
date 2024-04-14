@@ -93,7 +93,7 @@ def buy_multiple_eql_amts(stocks, amt, Platform):
     for stock in stocks:
         try:
             buyAsset(stock, round(listofPrices[counter], 1))
-            QueryStock(stock, round(listofPrices[counter], 1), Platform)
+            QueryStock(stock, round(listofPrices[counter], 1), float(amt), Platform)
             #print only up to 1 decimal place for amt / stockprice
             listofbuys.append(f'{listofPrices[counter]:.2f} shares of {stock} at {stockPrices[counter]}')
             counter += 1
