@@ -18,7 +18,7 @@ def get_response():
       },
       {
         "role": "user",
-        "content": "If you were to read the news and read the following, what stocks would you pick for the day. Only return the stock symbols and give me the top 10 you would pick. Return the stock symbols in a list with no numbers or extra characters. Only return stocks traded in U.S markets  EX: SPY, APL, NVDA"
+        "content": "If you were to read the news and read the following, what stocks would you pick for the day. Only return the stock symbols and give me the top 10 you would pick. Return the stock symbols in a list with no numbers or extra characters. Only return stocks traded in U.S markets, do not return any crypto currency.  EX: SPY, APL, NVDA"
       },
       {
         "role": "user",
