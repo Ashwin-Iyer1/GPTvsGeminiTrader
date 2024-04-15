@@ -115,7 +115,7 @@ def main():
             Gemini_content = Gemini.main()
             print(Gemini_content)
             numstocks = len(Gemini_content)
-            buys = buy_multiple_eql_amts(Gemini_content, 3000/numstocks, 'gemini')
+            buys = buy_multiple_eql_amts(Gemini_content, 1200/numstocks, 'gemini')
             if buys:
                 break
         except Exception as e:
@@ -129,7 +129,7 @@ def main():
             OpenAI_content = chatGPT.main()
             print(OpenAI_content)
             numstocks = len(OpenAI_content)
-            buys = buy_multiple_eql_amts(OpenAI_content, 3000/numstocks, 'openai')
+            buys = buy_multiple_eql_amts(OpenAI_content, 1200/numstocks, 'openai')
             if buys:
                 break
         except Exception as e:
