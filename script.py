@@ -110,7 +110,7 @@ def buy_multiple_eql_amts(stocks, amt, Platform):
 
 def main():
     i = 0
-    while i < 10:
+    while i < 15:
         try:
             Gemini_content = Gemini.main()
             print(Gemini_content)
@@ -124,7 +124,7 @@ def main():
 
 
     i = 0
-    while i < 10:
+    while i < 15:
         try:
             OpenAI_content = chatGPT.main()
             print(OpenAI_content)
