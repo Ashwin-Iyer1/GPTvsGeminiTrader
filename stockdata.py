@@ -56,7 +56,7 @@ def QueryStock(symbol, amt, total_spent, platform):
           VALUES (%s, %s, %s)
           ON CONFLICT (Stock) DO UPDATE SET
               Amt = EXCLUDED.Amt + "{platform}".Amt,
-              TotalSpent = EXCLUDED.TotalSpent
+              TotalSpent = EXCLUDED.TotalSpent + "{platform}".TotalSpent
           WHERE "{platform}".Stock = EXCLUDED.Stock;
       """
       cursor.execute(query, (symbol, amt, total_spent))
