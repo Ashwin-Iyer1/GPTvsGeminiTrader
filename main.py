@@ -1,5 +1,5 @@
 import script
-import datetime
+from datetime import datetime
 
 dt = datetime.now()
 if dt.isoweekday() > 5:
