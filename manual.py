@@ -1,4 +1,4 @@
-from script import buy_multiple_eql_amts
+import script
 import Gemini
 import chatGPT
 
@@ -10,7 +10,7 @@ def Gemini():
             Gemini_content = Gemini.main()
             print(Gemini_content)
             numstocks = len(Gemini_content)
-            buys = buy_multiple_eql_amts(Gemini_content, 3000/numstocks, 'gemini')
+            buys = script.buy_multiple_eql_amts(Gemini_content, 3000/numstocks, 'gemini')
             if buys:
                 break
         except Exception as e:
@@ -23,7 +23,7 @@ def GPT():
             OpenAI_content = chatGPT.main()
             print(OpenAI_content)
             numstocks = len(OpenAI_content)
-            buys = buy_multiple_eql_amts(OpenAI_content, 3000/numstocks, 'openai')
+            buys = script.buy_multiple_eql_amts(OpenAI_content, 3000/numstocks, 'openai')
             if buys:
                 break
         except Exception as e:
