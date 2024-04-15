@@ -138,14 +138,5 @@ def main():
 
 
 
-dt = datetime.now()
-if dt.isoweekday() > 5:
-    print("It's the weekend, no trading today")
-else:
-    initAcc()
-    margin()
-    main()
-    TableValue()
-    server.quit()
 
 
