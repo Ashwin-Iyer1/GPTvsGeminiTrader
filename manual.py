@@ -3,7 +3,7 @@ import Gemini
 import chatGPT
 
 
-def GPT():
+def Gemini():
     i = 0
     while i < 10:
         try:
@@ -16,7 +16,7 @@ def GPT():
         except Exception as e:
             print(f"Gemini Error occurred: {e}")
         i += 1
-def Gemini():
+def GPT():
     i = 0
     while i < 10:
         try:
